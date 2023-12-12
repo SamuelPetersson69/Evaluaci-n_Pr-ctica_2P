@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX_INSUMOS 30
+#define MESES 12
+
+//struct de toda la vida para copiar caracteres
+struct Insumo { 
+    char nombre[50];
+    int ingresos[MESES];
+    int egresos[MESES];
+};
+
+// esta wea genera los datos de los insumos tant6 ingresos como egresos
+void generarDatosAleatorios(struct Insumo insumos[], int cantidad) {
+    srand(time(NULL)); // esta semilla genera los numeros de toda la vida
+
+    for (int i = 0; i < cantidad; i++) {
+        for (int j = 0; j < MESES; j++) {
+            insumos[i].ingresos[j] = rand() % 10000 + 1; //crea ingresos aleatorios entre 1 y 10000
+            insumos[i].egresos[j] = rand() % 10000 + 1; // egresos aleatorios entre 1 y 10000
+        }
+    }
+}
+
+// esta preciocidad imprime a detalle los ingresos y egresos en el de detalklar el mes
+void imprimirDetalle(struct Insumo insumos[], int cantidad) {
+    printf("\nDetalle de ingresos y egresos por mes:\n");
+    for (int i = 0; i < cantidad; i++) {
+        printf("Insumo: %s\n", insumos[i].nombre);
+        for (int j = 0; j < MESES; j++) {
+            printf("Mes %d - Ingresos: %d - Egresos: %d\n", j + 1, insumos[i].ingresos[j], insumos[i].egresos[j]);
+        }
+        printf("\n"); //teacher casi me muero haciendo esto nesesite ayuda
+    }
+}
+
+// esta wea lo mismo que el anterior pero con el año pos datas estos dos se me complicaron y necesite ayuda
+void calcularTotales(struct Insumo insumos[], int cantidad) {
+    printf("\nTotales de ingresos y egresos en el año por insumo:\n");
+    for (int i = 0; i < cantidad; i++) {
+        int titalin = 0, TotalE = 0; // Inicializa variables para almacenar totales de ingresos y egresos
+        for (int j = 0; j < MESES; j++) {
+            titalin += insumos[i].ingresos[j]; // Suma los ingresos de cada mes al total de ingresos
+            TotalE += insumos[i].egresos[j]; // Suma los egresos de cada mes al total de egresos
+        }
+        printf("Insumo: %s - Total Ingresos: %d - Total Egresos: %d\n", insumos[i].nombre, titalin, TotalE);
+    }
+}
+
+int main() {
+    struct Insumo insumos[MAX_INSUMOS]; // esta wea ingresa los datos que se le pidio al usuario
+    int cantidadInsumos;
+
+    printf("Ingrese la cantidad de insumos a manejar (máximo %d): ", MAX_INSUMOS);
+    scanf("%d", &cantidadInsumos);
+    getchar(); // esto limpia los datos si no estos se acumularian
+
+    if (cantidadInsumos > MAX_INSUMOS || cantidadInsumos <= 0) {
+        printf("Cantidad de insumos no válida.\n");
+        return 1;
+    }
+
+    printf("Ingrese el nombre de los insumos:\n");
+    for (int i = 0; i < cantidadInsumos; i++) {
+        printf("Nombre del insumo %d: ", i + 1);
+        fgets(insumos[i].nombre, sizeof(insumos[i].nombre), stdin);
+    }
+
+    generarDatosAleatorios(insumos, cantidadInsumos); // esta wea Genera datos aleatorios para ingresos y egresos
+
+    int opcion;
+    do {
+        printf("\nOpciones:\n");
+        printf("1) Imprimir detalle de ingresos y egresos por mes y por insumo\n");
+        printf("2) Obtener total de ingresos y egresos en el año por insumo\n");
+        printf("0) Salir\n");
+        printf("Ingrese su opción: ");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                imprimirDetalle(insumos, cantidadInsumos); // esyta sirve para llamar a la funcion e imprimir insumos
+                break;
+            case 2:
+                calcularTotales(insumos, cantidadInsumos); //esta lo mismo pero en los totales
+                break;
+            case 0:
+                printf("Saliendo del programa.\n");
+                break;
+            default:
+                printf("Opción no válida.\n");
+        }
+    } while (opcion != 0);
+
+    return 0;
+} //casi me muero haciendo esto ¡¡¡¡¡¡ ezco um premio !!!!!!!
