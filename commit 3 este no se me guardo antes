@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX_INSUMOS 30
+#define MESES 12
+
+//struct de toda la vida para copiar caracteres
+struct Insumo { 
+    char nombre[50];
+    int ingresos[MESES];
+    int egresos[MESES];
+};
+
+// esta wea genera los datos de los insumos tant6 ingresos como egresos
+void generarDatosAleatorios(struct Insumo insumos[], int cantidad) {
+    srand(time(NULL)); // esta semilla genera los numeros de toda la vida
+
+    for (int i = 0; i < cantidad; i++) {
+        for (int j = 0; j < MESES; j++) {
+            insumos[i].ingresos[j] = rand() % 10000 + 1; //crea ingresos aleatorios entre 1 y 10000
+            insumos[i].egresos[j] = rand() % 10000 + 1; // egresos aleatorios entre 1 y 10000
+        }
+    }
+}
+
+// esta preciocidad imprime a detalle los ingresos y egresos en el de detalklar el mes
+void imprimirDetalle(struct Insumo insumos[], int cantidad) {
+    printf("\nDetalle de ingresos y egresos por mes:\n");
+    for (int i = 0; i < cantidad; i++) {
+        printf("Insumo: %s\n", insumos[i].nombre);
+        for (int j = 0; j < MESES; j++) {
+            printf("Mes %d - Ingresos: %d - Egresos: %d\n", j + 1, insumos[i].ingresos[j], insumos[i].egresos[j]);
+        }
+        printf("\n"); //teacher casi me muero haciendo esto nesesite ayuda
+    }
+}
+
+// esta wea lo mismo que el anterior pero con el año pos datas estos dos se me complicaron y necesite ayuda
+void calcularTotales(struct Insumo insumos[], int cantidad) {
+    printf("\nTotales de ingresos y egresos en el año por insumo:\n");
+    for (int i = 0; i < cantidad; i++) {
+        int titalin = 0, TotalE = 0; // Inicializa variables para almacenar totales de ingresos y egresos
+        for (int j = 0; j < MESES; j++) {
+            titalin += insumos[i].ingresos[j]; // Suma los ingresos de cada mes al total de ingresos
+            TotalE += insumos[i].egresos[j]; // Suma los egresos de cada mes al total de egresos
+        }
+        printf("Insumo: %s - Total Ingresos: %d - Total Egresos: %d\n", insumos[i].nombre, titalin, TotalE);
+    }
+}
