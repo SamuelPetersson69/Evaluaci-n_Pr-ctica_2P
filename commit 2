@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX_INSUMOS 30
+#define MESES 12
+
+struct Insumo { //struct de toda la vida para copiar caracteres
+    char nombre[50];
+    int ingresos[MESES];
+    int egresos[MESES];
+};
+
